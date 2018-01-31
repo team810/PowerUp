@@ -18,10 +18,13 @@ public class OI {
 	public Joystick leftStick, rightStick;
 	
 	public OI() {
+		//Joysticks
 		leftStick = new Joystick(PortNumbers.LEFT_JOYSTICK);
 		rightStick = new Joystick(PortNumbers.RIGHT_JOYSTICK);
 		
+		//Buttons
 		
+		//SmartDashboard values
 		SmartDashboard.putNumber("kP", 0);
 		SmartDashboard.putNumber("kI", 0);
 		SmartDashboard.putNumber("kD", 0);

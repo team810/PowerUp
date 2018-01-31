@@ -15,6 +15,7 @@ public class Drive extends Command {
 		double left = -Robot.oi.leftStick.getRawAxis(1);
 		double right = -Robot.oi.rightStick.getRawAxis(1);
 		
+		//Add dead zone to joysticks
 		if (Math.abs(left) < .2)
 			left = 0;
 		if (Math.abs(right) < .2)

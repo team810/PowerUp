@@ -26,6 +26,10 @@ public class Claw extends Subsystem {
 	}
 	
 	public boolean get() {
+		//Make sure the pistons are synched. This shouldn't be necessary
+		if (clawL.get() != clawR.get())
+			clawR.set(clawL.get());
+		
 		return clawL.get();
 	}
 

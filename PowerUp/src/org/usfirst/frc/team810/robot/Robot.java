@@ -61,6 +61,7 @@ public class Robot extends TimedRobot {
 	public void robotInit() {
 		RobotMap.init();
 		
+		//Acquire strings to help decide which auto to use
 		targetChooser.addDefault("Do Nothing", "Nothing");
 		targetChooser.addObject("Go Forward", "Forward");
 		targetChooser.addObject("Switch", "Switch");
@@ -70,6 +71,7 @@ public class Robot extends TimedRobot {
 		startPosChooser.addObject("Center", "Center");
 		startPosChooser.addObject("Right", "Right");
 		
+		//Initialize Subsystems
 		driveTrain = new DriveTrain();
 		arm = new Arm();
 		claw = new Claw();
@@ -110,11 +112,13 @@ public class Robot extends TimedRobot {
 	
 	@Override
 	public void autonomousInit() {
+		//Extend intake rollers slightly outside of bumpers
 		RobotMap.intakePiston.set(true);
 		
 		start = startPosChooser.getSelected();
 		target = startPosChooser.getSelected();
 		
+		//Ugly code to decide auto using other methods for cleanliness
 		if (target.equals("Nothing"))
 			autonomousCommand = new DoNothing();
 		else if (target.equals("Forward"))

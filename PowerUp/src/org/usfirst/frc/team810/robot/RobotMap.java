@@ -53,6 +53,7 @@ public class RobotMap {
 		clawR = new Solenoid(PortNumbers.CLAW_RIGHT);
 		springPiston = new Solenoid(PortNumbers.SPRING_PISTON);
 		
+		//Sensors
 		navx = new AHRS(edu.wpi.first.wpilibj.I2C.Port.kOnboard);
 	}
 }

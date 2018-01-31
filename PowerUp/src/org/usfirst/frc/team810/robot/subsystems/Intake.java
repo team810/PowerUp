@@ -20,15 +20,9 @@ public class Intake extends Subsystem {
 
 	}
 	
+	//Allows only 1 parameter if both motors are the same speed for maximum programmer laziness
 	public void set(double speed) {
-		if (speed == 0) {
-			left.disable();
-			right.disable();
-		}
-		else {
-			left.set(speed);
-			right.set(speed);
-		}
+		set(speed, speed);
 	}
 
 	public void set(double speedL, double speedR)  {
@@ -36,6 +30,7 @@ public class Intake extends Subsystem {
 			left.disable();
 		else
 			left.set(speedL);
+		
 		if (speedR == 0)
 			right.disable();
 		else
