@@ -21,7 +21,11 @@ import org.usfirst.frc.team810.robot.commands.autonomous.SwitchLL;
 import org.usfirst.frc.team810.robot.commands.autonomous.SwitchLR;
 import org.usfirst.frc.team810.robot.commands.autonomous.SwitchRL;
 import org.usfirst.frc.team810.robot.commands.autonomous.SwitchRR;
+import org.usfirst.frc.team810.robot.subsystems.Arm;
+import org.usfirst.frc.team810.robot.subsystems.Claw;
+import org.usfirst.frc.team810.robot.subsystems.Climber;
 import org.usfirst.frc.team810.robot.subsystems.DriveTrain;
+import org.usfirst.frc.team810.robot.subsystems.Intake;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -40,6 +44,10 @@ public class Robot extends TimedRobot {
 	
 	public static OI oi;
 	public static DriveTrain driveTrain;
+	public static Arm arm;
+	public static Claw claw;
+	public static Climber climber;
+	public static Intake intake;
 
 	Command autonomousCommand;
 	SendableChooser<String> targetChooser = new SendableChooser<>();
@@ -63,6 +71,10 @@ public class Robot extends TimedRobot {
 		startPosChooser.addObject("Right", "Right");
 		
 		driveTrain = new DriveTrain();
+		arm = new Arm();
+		claw = new Claw();
+		climber = new Climber();
+		intake = new Intake();
 		
 		oi = new OI();
 	}
@@ -98,6 +110,8 @@ public class Robot extends TimedRobot {
 	
 	@Override
 	public void autonomousInit() {
+		RobotMap.intakePiston.set(true);
+		
 		start = startPosChooser.getSelected();
 		target = startPosChooser.getSelected();
 		

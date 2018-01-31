@@ -7,6 +7,7 @@
 
 package org.usfirst.frc.team810.robot;
 
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
@@ -19,10 +20,12 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
  */
 public class RobotMap {
 	
-	public static Spark frontL, frontR, rearL, rearR;
+	public static Spark frontL, frontR, rearL, rearR, intakeL, intakeR, armMotor, hookMotor, climbMotor;
+	public static Solenoid intakePiston, clawL, clawR, springPiston;
 	public static DifferentialDrive robotDrive;
 	
 	public static void init() {
+		//Drive Train
 		frontL = new Spark(PortNumbers.DRIVE_FRONT_LEFT);
 		frontR = new Spark(PortNumbers.DRIVE_FRONT_RIGHT);
 		rearR = new Spark(PortNumbers.DRIVE_REAR_RIGHT);
@@ -31,5 +34,18 @@ public class RobotMap {
 		SpeedControllerGroup leftGroup = new SpeedControllerGroup(frontL, rearL);
 		SpeedControllerGroup rightGroup = new SpeedControllerGroup(frontR, rearR);
 		robotDrive = new DifferentialDrive(leftGroup, rightGroup);
+		
+		//SIM Motors
+		intakeL = new Spark(PortNumbers.INTAKE_LEFT);
+		intakeR = new Spark(PortNumbers.INTAKE_RIGHT);
+		armMotor = new Spark(PortNumbers.ARM_MOTOR);
+		hookMotor = new Spark(PortNumbers.HOOK_MOTOR);
+		climbMotor = new Spark(PortNumbers.CLIMB_MOTOR);
+		
+		//Solenoids
+		intakePiston = new Solenoid(PortNumbers.INTAKE_PISTON);
+		clawL = new Solenoid(PortNumbers.CLAW_LEFT);
+		clawR = new Solenoid(PortNumbers.CLAW_RIGHT);
+		springPiston = new Solenoid(PortNumbers.SPRING_PISTON);
 	}
 }

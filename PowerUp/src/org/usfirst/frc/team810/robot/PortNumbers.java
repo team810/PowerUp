@@ -11,4 +11,15 @@ public class PortNumbers {
 	public static final int DRIVE_REAR_LEFT = 1;
 	public static final int DRIVE_FRONT_RIGHT = 2;
 	public static final int DRIVE_REAR_RIGHT = 3;
+	public static final int INTAKE_LEFT = 4;
+	public static final int INTAKE_RIGHT = 5;
+	public static final int ARM_MOTOR = 6;
+	public static final int HOOK_MOTOR = 7;
+	public static final int CLIMB_MOTOR = 8;
+	
+	//PCM
+	public static final int INTAKE_PISTON = 0;
+	public static final int CLAW_LEFT = 1;
+	public static final int CLAW_RIGHT = 2;
+	public static final int SPRING_PISTON = 3;
 }
