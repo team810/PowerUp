@@ -8,6 +8,7 @@
 package org.usfirst.frc.team810.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -19,5 +20,10 @@ public class OI {
 	public OI() {
 		leftStick = new Joystick(PortNumbers.LEFT_JOYSTICK);
 		rightStick = new Joystick(PortNumbers.RIGHT_JOYSTICK);
+		
+		
+		SmartDashboard.putNumber("kP", 0);
+		SmartDashboard.putNumber("kI", 0);
+		SmartDashboard.putNumber("kD", 0);
 	}
 }

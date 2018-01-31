@@ -11,32 +11,32 @@ import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class DriveForward extends Command {
+public class RotateToAngle extends Command {
 	
 	AHRS navx = RobotMap.navx;
-	double dist;
+	double target;
 	PIDController pid;
 	
 	private int counter = 0;
 	
-	public DriveForward(double dist) {
+	public RotateToAngle(double target) {
 		requires(Robot.driveTrain);
-		this.dist = dist;
+		this.target = target;
 	}
 
 	@Override
 	protected void initialize() {
-		pid = new PIDController(SmartDashboard.getNumber("kP", 0), SmartDashboard.getNumber("kI", 0), SmartDashboard.getNumber("kD", 0), new DistanceSource(), a->{});
-		pid.setContinuous(false);
-		pid.setOutputRange(-1, 1);
-		pid.setAbsoluteTolerance(0.0762); //.25 ft
-		pid.setSetpoint(dist);
+		pid = new PIDController(SmartDashboard.getNumber("kP", 0), SmartDashboard.getNumber("kI", 0), SmartDashboard.getNumber("kD", 0), new AngleSource(), a->{});
+		pid.setContinuous(true);
+		pid.setOutputRange(-.5, .5);
+		pid.setAbsoluteTolerance(2);
+		pid.setSetpoint(target);
 		pid.enable();
 	}
 
 	@Override
 	protected void execute() {
-		Robot.driveTrain.arcadeDrive(pid.get(), 0);
+		Robot.driveTrain.arcadeDrive(0, pid.get());
 		if (pid.onTarget())
 			counter++;
 		else
@@ -61,11 +61,11 @@ public class DriveForward extends Command {
 
 }
 
-class DistanceSource implements PIDSource {
+class AngleSource implements PIDSource {
 	
-	DistanceSource() {
+	AngleSource() {
 		RobotMap.navx.reset();
-		RobotMap.navx.resetDisplacement();
+		RobotMap.navx.zeroYaw();
 	}
 
 	@Override
@@ -82,7 +82,7 @@ class DistanceSource implements PIDSource {
 
 	@Override
 	public double pidGet() {
-		return RobotMap.navx.getDisplacementX();
+		return RobotMap.navx.getYaw();
 	}
 	
 }

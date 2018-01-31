@@ -7,6 +7,9 @@
 
 package org.usfirst.frc.team810.robot;
 
+import com.kauailabs.navx.frc.AHRS;
+
+import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
@@ -23,6 +26,8 @@ public class RobotMap {
 	public static Spark frontL, frontR, rearL, rearR, intakeL, intakeR, armMotor, hookMotor, climbMotor;
 	public static Solenoid intakePiston, clawL, clawR, springPiston;
 	public static DifferentialDrive robotDrive;
+	
+	public static AHRS navx;
 	
 	public static void init() {
 		//Drive Train
@@ -47,5 +52,7 @@ public class RobotMap {
 		clawL = new Solenoid(PortNumbers.CLAW_LEFT);
 		clawR = new Solenoid(PortNumbers.CLAW_RIGHT);
 		springPiston = new Solenoid(PortNumbers.SPRING_PISTON);
+		
+		navx = new AHRS(edu.wpi.first.wpilibj.I2C.Port.kOnboard);
 	}
 }

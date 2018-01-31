@@ -118,7 +118,7 @@ public class Robot extends TimedRobot {
 		if (target.equals("Nothing"))
 			autonomousCommand = new DoNothing();
 		else if (target.equals("Forward"))
-			autonomousCommand = new DriveForward();
+			autonomousCommand = new DriveForward(3);
 		else if (target.equals("Switch"))
 			targetSwitch();
 		else if (target.equals("Scale"))
