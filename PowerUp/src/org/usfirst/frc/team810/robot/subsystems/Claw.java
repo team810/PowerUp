@@ -7,11 +7,9 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class Claw extends Subsystem {
 	
-	Solenoid clawL, clawR;
+	Solenoid claw;
 	
 	public Claw() {
-		clawL = RobotMap.clawL;
-		clawR = RobotMap.clawR;
 	}
 
 	@Override
@@ -21,16 +19,11 @@ public class Claw extends Subsystem {
 	}
 	
 	public void set(boolean value) {
-		clawL.set(value);
-		clawR.set(value);
+		claw.set(value);
 	}
 	
 	public boolean get() {
-		//Make sure the pistons are synched. This shouldn't be necessary
-		if (clawL.get() != clawR.get())
-			clawR.set(clawL.get());
-		
-		return clawL.get();
+		return claw.get();
 	}
 
 }

@@ -19,7 +19,6 @@ public class PortNumbers {
 	
 	//PCM
 	public static final int INTAKE_PISTON = 0;
-	public static final int CLAW_LEFT = 1;
-	public static final int CLAW_RIGHT = 2;
-	public static final int SPRING_PISTON = 3;
+	public static final int CLAW = 1;
+	public static final int SPRING_PISTON = 2;
 }

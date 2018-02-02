@@ -24,7 +24,7 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 public class RobotMap {
 	
 	public static Spark frontL, frontR, rearL, rearR, intakeL, intakeR, armMotor, hookMotor, climbMotor;
-	public static Solenoid intakePiston, clawL, clawR, springPiston;
+	public static Solenoid intakePiston, claw, springPiston;
 	public static DifferentialDrive robotDrive;
 	
 	public static AHRS navx;
@@ -49,8 +49,7 @@ public class RobotMap {
 		
 		//Solenoids
 		intakePiston = new Solenoid(PortNumbers.INTAKE_PISTON);
-		clawL = new Solenoid(PortNumbers.CLAW_LEFT);
-		clawR = new Solenoid(PortNumbers.CLAW_RIGHT);
+		claw = new Solenoid(PortNumbers.CLAW);
 		springPiston = new Solenoid(PortNumbers.SPRING_PISTON);
 		
 		//Sensors
