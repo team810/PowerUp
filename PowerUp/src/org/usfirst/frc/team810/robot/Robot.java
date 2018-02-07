@@ -112,6 +112,8 @@ public class Robot extends TimedRobot {
 	
 	@Override
 	public void autonomousInit() {
+		//Grab the initial cube before moving
+		RobotMap.claw.set(true);
 		//Extend intake rollers slightly outside of bumpers
 		RobotMap.intakePiston.set(true);
 		
@@ -122,7 +124,7 @@ public class Robot extends TimedRobot {
 		if (target.equals("Nothing"))
 			autonomousCommand = new DoNothing();
 		else if (target.equals("Forward"))
-			autonomousCommand = new DriveForward(3);
+			autonomousCommand = new DriveForward(start.equals("Center") ? 3 : 10);
 		else if (target.equals("Switch"))
 			targetSwitch();
 		else if (target.equals("Scale"))

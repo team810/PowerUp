@@ -16,6 +16,7 @@ public class PortNumbers {
 	public static final int ARM_MOTOR = 6;
 	public static final int HOOK_MOTOR = 7;
 	public static final int CLIMB_MOTOR = 8;
+	public static final int POT = 9;
 	
 	//PCM
 	public static final int INTAKE_PISTON = 0;

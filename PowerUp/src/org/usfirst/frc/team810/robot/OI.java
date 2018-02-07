@@ -28,5 +28,9 @@ public class OI {
 		SmartDashboard.putNumber("kP", 0);
 		SmartDashboard.putNumber("kI", 0);
 		SmartDashboard.putNumber("kD", 0);
+		
+		SmartDashboard.putNumber("kP_Arm", 0);
+		SmartDashboard.putNumber("kI_Arm", 0);
+		SmartDashboard.putNumber("kD_Arm", 0);
 	}
 }

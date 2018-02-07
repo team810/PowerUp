@@ -11,33 +11,31 @@ import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class DriveForward extends Command {
+public class AutoMoveArm extends Command {
 	
 	AHRS navx = RobotMap.navx;
-	double dist;
+	double target;
 	PIDController pid;
 	
 	private int counter = 0;
 	
-	//takes distance in feet
-	public DriveForward(double dist) {
+	public AutoMoveArm(double target) {
 		requires(Robot.driveTrain);
-		this.dist = Conversions.feetToMeters(dist);
+		this.target = target;
 	}
 
 	@Override
 	protected void initialize() {
-		pid = new PIDController(SmartDashboard.getNumber("kP", 0), SmartDashboard.getNumber("kI", 0), SmartDashboard.getNumber("kD", 0), new DistanceSource(), a->{});
+		pid = new PIDController(SmartDashboard.getNumber("kP_Arm", 0), SmartDashboard.getNumber("kI_Arm", 0), SmartDashboard.getNumber("kD_Arm", 0), RobotMap.pot, RobotMap.armMotor);
 		pid.setContinuous(false);
-		pid.setOutputRange(-1, 1);
-		pid.setAbsoluteTolerance(0.0762); //.25 ft
-		pid.setSetpoint(dist);
+		pid.setOutputRange(-.5, .5);
+		pid.setAbsoluteTolerance(2);
+		pid.setSetpoint(target);
 		pid.enable();
 	}
 
 	@Override
 	protected void execute() {
-		Robot.driveTrain.arcadeDrive(pid.get(), 0);
 		if (pid.onTarget())
 			counter++;
 		else
@@ -60,30 +58,4 @@ public class DriveForward extends Command {
 		return counter >= 10;
 	}
 
-}
-
-class DistanceSource implements PIDSource {
-	
-	DistanceSource() {
-		RobotMap.navx.reset();
-		RobotMap.navx.resetDisplacement();
-	}
-
-	@Override
-	public void setPIDSourceType(PIDSourceType pidSource) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public PIDSourceType getPIDSourceType() {
-		// TODO Auto-generated method stub
-		return PIDSourceType.kDisplacement;
-	}
-
-	@Override
-	public double pidGet() {
-		return RobotMap.navx.getDisplacementX();
-	}
-	
 }

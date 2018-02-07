@@ -9,7 +9,7 @@ package org.usfirst.frc.team810.robot;
 
 import com.kauailabs.navx.frc.AHRS;
 
-import edu.wpi.first.wpilibj.SerialPort;
+import edu.wpi.first.wpilibj.AnalogPotentiometer;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
@@ -28,6 +28,7 @@ public class RobotMap {
 	public static DifferentialDrive robotDrive;
 	
 	public static AHRS navx;
+	public static AnalogPotentiometer pot;
 	
 	public static void init() {
 		//Drive Train
@@ -54,5 +55,6 @@ public class RobotMap {
 		
 		//Sensors
 		navx = new AHRS(edu.wpi.first.wpilibj.I2C.Port.kOnboard);
+		pot = new AnalogPotentiometer(PortNumbers.POT);
 	}
 }
