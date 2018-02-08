@@ -3,6 +3,7 @@ package org.usfirst.frc.team810.robot.commands;
 import org.usfirst.frc.team810.robot.Robot;
 import org.usfirst.frc.team810.robot.RobotMap;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.TimedCommand;
 
 public class RetractHook extends TimedCommand {
@@ -20,7 +21,8 @@ public class RetractHook extends TimedCommand {
 
 	@Override
 	protected void execute() {
-		RobotMap.hookMotor.set(-.35);
+		if (DriverStation.getInstance().getMatchTime() <= 30)
+			RobotMap.hookMotor.set(-.35);
 	}
 
 	@Override
