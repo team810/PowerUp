@@ -5,6 +5,7 @@ import org.usfirst.frc.team810.robot.RobotMap;
 
 import com.kauailabs.navx.frc.AHRS;
 
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDSource;
 import edu.wpi.first.wpilibj.PIDSourceType;
@@ -12,9 +13,8 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class DriveForward extends Command {
-	
-	AHRS navx = RobotMap.navx;
-	double dist;
+
+	double dist, heading;
 	PIDController pid;
 	
 	private int counter = 0;
@@ -22,7 +22,8 @@ public class DriveForward extends Command {
 	//takes distance in feet
 	public DriveForward(double dist) {
 		requires(Robot.driveTrain);
-		this.dist = Conversions.feetToMeters(dist);
+		this.dist = dist * 12; //convert feet to inches
+		heading = RobotMap.navx.getAngle();
 	}
 
 	@Override
@@ -30,14 +31,16 @@ public class DriveForward extends Command {
 		pid = new PIDController(SmartDashboard.getNumber("kP", 0), SmartDashboard.getNumber("kI", 0), SmartDashboard.getNumber("kD", 0), new DistanceSource(), a->{});
 		pid.setContinuous(false);
 		pid.setOutputRange(-1, 1);
-		pid.setAbsoluteTolerance(0.0762); //.25 ft
+		pid.setAbsoluteTolerance(2);
 		pid.setSetpoint(dist);
 		pid.enable();
 	}
 
 	@Override
 	protected void execute() {
-		Robot.driveTrain.arcadeDrive(pid.get(), 0);
+		double rot = (heading - RobotMap.navx.getAngle()) * SmartDashboard.getNumber("kP", 0);
+		Robot.driveTrain.arcadeDrive(pid.get(), rot);
+		
 		if (pid.onTarget())
 			counter++;
 		else
@@ -64,9 +67,12 @@ public class DriveForward extends Command {
 
 class DistanceSource implements PIDSource {
 	
+	Encoder leftEnc = RobotMap.leftEnc;
+	Encoder rightEnc = RobotMap.rightEnc;
+	
 	DistanceSource() {
-		RobotMap.navx.reset();
-		RobotMap.navx.resetDisplacement();
+		leftEnc.reset();
+		rightEnc.reset();
 	}
 
 	@Override
@@ -83,7 +89,7 @@ class DistanceSource implements PIDSource {
 
 	@Override
 	public double pidGet() {
-		return RobotMap.navx.getDisplacementX();
+		return (leftEnc.getDistance() + rightEnc.getDistance()) / 2;
 	}
 	
 }

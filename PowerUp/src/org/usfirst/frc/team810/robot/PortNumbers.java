@@ -25,4 +25,10 @@ public class PortNumbers {
 	
 	//Analog
 	public static final int POT = 0;
+	
+	//DIO
+	public static final int ENCODER_LEFT_A = 0;
+	public static final int ENCODER_LEFT_B = 1;
+	public static final int ENCODER_RIGHT_A = 2;
+	public static final int ENCODER_RIGHT_B = 3;
 }

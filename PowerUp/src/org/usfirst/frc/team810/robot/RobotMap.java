@@ -10,6 +10,8 @@ package org.usfirst.frc.team810.robot;
 import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.AnalogPotentiometer;
+import edu.wpi.first.wpilibj.CounterBase;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
@@ -29,6 +31,10 @@ public class RobotMap {
 	
 	public static AHRS navx;
 	public static AnalogPotentiometer pot;
+	public static Encoder leftEnc, rightEnc;
+	
+	private static final double wheelDiameter = 4; //in inches
+	private static final double pulsesPerRev = 1440;
 	
 	public static void init() {
 		//Drive Train
@@ -41,7 +47,7 @@ public class RobotMap {
 		SpeedControllerGroup rightGroup = new SpeedControllerGroup(frontR, rearR);
 		robotDrive = new DifferentialDrive(leftGroup, rightGroup);
 		
-		//SIM Motors
+		//CIM Motors
 		intakeL = new Spark(PortNumbers.INTAKE_LEFT);
 		intakeR = new Spark(PortNumbers.INTAKE_RIGHT);
 		armMotor = new Spark(PortNumbers.ARM_MOTOR);
@@ -56,5 +62,11 @@ public class RobotMap {
 		//Sensors
 		navx = new AHRS(edu.wpi.first.wpilibj.I2C.Port.kOnboard);
 		pot = new AnalogPotentiometer(PortNumbers.POT);
+		
+		leftEnc = new Encoder(PortNumbers.ENCODER_LEFT_A, PortNumbers.ENCODER_LEFT_B, false, CounterBase.EncodingType.k4X);
+		rightEnc = new Encoder(PortNumbers.ENCODER_RIGHT_A, PortNumbers.ENCODER_RIGHT_B, false, CounterBase.EncodingType.k4X);
+		
+		leftEnc.setDistancePerPulse((Math.PI * wheelDiameter) / pulsesPerRev);
+		rightEnc.setDistancePerPulse((Math.PI * wheelDiameter) / pulsesPerRev);
 	}
 }
