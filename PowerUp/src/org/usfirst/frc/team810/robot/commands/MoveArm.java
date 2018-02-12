@@ -24,9 +24,9 @@ public class MoveArm extends Command {
 
 	@Override
 	protected void execute() {
-		if ((speed < 0 && pot.get() <= Arm.DOWN) || (speed > 0 && pot.get() >= Arm.UP))
+		if ((speed < 0 && pot.get() <= Arm.down) || (speed > 0 && pot.get() >= Arm.up))
 			speed = 0;
-		else if ((speed < 0 && pot.get() <= Arm.DOWN_AREA) || (speed > 0 && pot.get() >= Arm.UP_AREA))
+		else if ((speed < 0 && pot.get() <= Arm.down_area) || (speed > 0 && pot.get() >= Arm.up_area))
 			speed *= .25;
 		
 		RobotMap.armMotor.set(speed);

@@ -63,7 +63,8 @@ public class RobotMap {
 		
 		//Sensors
 		navx = new AHRS(edu.wpi.first.wpilibj.I2C.Port.kOnboard);
-		pot = new AnalogPotentiometer(PortNumbers.POT, 360 * 10, pot.get());
+		pot = new AnalogPotentiometer(PortNumbers.POT, 25, 0); //25 in string pot
+		Arm.initConstants();
 		
 		leftEnc = new Encoder(PortNumbers.ENCODER_LEFT_A, PortNumbers.ENCODER_LEFT_B, false, CounterBase.EncodingType.k4X);
 		rightEnc = new Encoder(PortNumbers.ENCODER_RIGHT_A, PortNumbers.ENCODER_RIGHT_B, false, CounterBase.EncodingType.k4X);
