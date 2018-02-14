@@ -8,15 +8,13 @@ public class PortNumbers {
 	public static final int GAMEPAD = 2;
 	
 	//PWM
-	public static final int DRIVE_FRONT_LEFT = 0;
-	public static final int DRIVE_REAR_LEFT = 1;
-	public static final int DRIVE_FRONT_RIGHT = 2;
-	public static final int DRIVE_REAR_RIGHT = 3;
-	public static final int INTAKE_LEFT = 4;
-	public static final int INTAKE_RIGHT = 5;
-	public static final int ARM_MOTOR = 6;
-	public static final int HOOK_MOTOR = 7;
-	public static final int CLIMB_MOTOR = 8;
+	public static final int DRIVE_REAR_LEFT = 0;
+	public static final int DRIVE_REAR_RIGHT = 1;
+	public static final int INTAKE_LEFT = 2;
+	public static final int INTAKE_RIGHT = 3;
+	public static final int ARM_MOTOR = 4;
+	public static final int HOOK_MOTOR = 5;
+	public static final int CLIMB_MOTOR = 6;
 	
 	//PCM
 	public static final int INTAKE_PISTON = 0;
@@ -31,4 +29,8 @@ public class PortNumbers {
 	public static final int ENCODER_LEFT_B = 1;
 	public static final int ENCODER_RIGHT_A = 2;
 	public static final int ENCODER_RIGHT_B = 3;
+	
+	//CAN
+	public static final int DRIVE_FRONT_LEFT = 2;
+	public static final int DRIVE_FRONT_RIGHT = 3;
 }

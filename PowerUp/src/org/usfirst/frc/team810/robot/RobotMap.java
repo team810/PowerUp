@@ -9,6 +9,7 @@ package org.usfirst.frc.team810.robot;
 
 import org.usfirst.frc.team810.robot.subsystems.Arm;
 
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.AnalogPotentiometer;
@@ -27,21 +28,22 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
  */
 public class RobotMap {
 	
-	public static Spark frontL, frontR, rearL, rearR, intakeL, intakeR, armMotor, hookMotor, climbMotor;
+	public static Spark rearL, rearR, intakeL, intakeR, armMotor, hookMotor, climbMotor;
 	public static Solenoid intakePiston, claw, springPiston;
 	public static DifferentialDrive robotDrive;
+	public static WPI_TalonSRX frontL, frontR;
 	
 	public static AHRS navx;
 	public static AnalogPotentiometer pot;
 	public static Encoder leftEnc, rightEnc;
 	
-	private static final double wheelDiameter = 4; //in inches
+	private static final double wheelDiameter = 6; //in inches
 	private static final double pulsesPerRev = 1440;
 	
 	public static void init() {
 		//Drive Train
-		frontL = new Spark(PortNumbers.DRIVE_FRONT_LEFT);
-		frontR = new Spark(PortNumbers.DRIVE_FRONT_RIGHT);
+		frontL = new WPI_TalonSRX(PortNumbers.DRIVE_FRONT_LEFT);
+		frontR = new WPI_TalonSRX(PortNumbers.DRIVE_FRONT_RIGHT);
 		rearR = new Spark(PortNumbers.DRIVE_REAR_RIGHT);
 		rearL = new Spark(PortNumbers.DRIVE_REAR_LEFT);
 		

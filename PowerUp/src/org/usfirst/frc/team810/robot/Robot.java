@@ -7,7 +7,6 @@
 
 package org.usfirst.frc.team810.robot;
 
-import org.usfirst.frc.team810.robot.commands.autonomous.DoNothing;
 import org.usfirst.frc.team810.robot.commands.autonomous.DriveForward;
 import org.usfirst.frc.team810.robot.commands.autonomous.ScaleCL;
 import org.usfirst.frc.team810.robot.commands.autonomous.ScaleCR;
@@ -27,6 +26,8 @@ import org.usfirst.frc.team810.robot.subsystems.Climber;
 import org.usfirst.frc.team810.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team810.robot.subsystems.Intake;
 
+import edu.wpi.cscore.UsbCamera;
+import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
@@ -48,6 +49,8 @@ public class Robot extends TimedRobot {
 	public static Claw claw;
 	public static Climber climber;
 	public static Intake intake;
+	
+	public static UsbCamera intakeCam;
 
 	Command autonomousCommand;
 	SendableChooser<String> targetChooser = new SendableChooser<>();
@@ -62,8 +65,7 @@ public class Robot extends TimedRobot {
 		RobotMap.init();
 		
 		//Acquire strings to help decide which auto to use
-		targetChooser.addDefault("Do Nothing", "Nothing");
-		targetChooser.addObject("Go Forward", "Forward");
+		targetChooser.addDefault("Go Forward", "Forward");
 		targetChooser.addObject("Switch", "Switch");
 		targetChooser.addObject("Scale", "Scale");
 		
@@ -79,6 +81,8 @@ public class Robot extends TimedRobot {
 		intake = new Intake();
 		
 		oi = new OI();
+		
+		intakeCam = CameraServer.getInstance().startAutomaticCapture("Intake", 0);
 	}
 
 	/**
@@ -121,9 +125,7 @@ public class Robot extends TimedRobot {
 		target = startPosChooser.getSelected();
 		
 		//Ugly code to decide auto using other methods for cleanliness
-		if (target.equals("Nothing"))
-			autonomousCommand = new DoNothing();
-		else if (target.equals("Forward"))
+		if (target.equals("Forward"))
 			autonomousCommand = new DriveForward(start.equals("Center") ? 3 : 10);
 		else if (target.equals("Switch"))
 			targetSwitch();
