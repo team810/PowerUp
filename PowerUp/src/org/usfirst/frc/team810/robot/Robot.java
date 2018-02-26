@@ -8,17 +8,11 @@
 package org.usfirst.frc.team810.robot;
 
 import org.usfirst.frc.team810.robot.commands.autonomous.DriveForward;
-import org.usfirst.frc.team810.robot.commands.autonomous.ScaleCL;
-import org.usfirst.frc.team810.robot.commands.autonomous.ScaleCR;
 import org.usfirst.frc.team810.robot.commands.autonomous.ScaleLL;
-import org.usfirst.frc.team810.robot.commands.autonomous.ScaleLR;
-import org.usfirst.frc.team810.robot.commands.autonomous.ScaleRL;
 import org.usfirst.frc.team810.robot.commands.autonomous.ScaleRR;
 import org.usfirst.frc.team810.robot.commands.autonomous.SwitchCL;
 import org.usfirst.frc.team810.robot.commands.autonomous.SwitchCR;
 import org.usfirst.frc.team810.robot.commands.autonomous.SwitchLL;
-import org.usfirst.frc.team810.robot.commands.autonomous.SwitchLR;
-import org.usfirst.frc.team810.robot.commands.autonomous.SwitchRL;
 import org.usfirst.frc.team810.robot.commands.autonomous.SwitchRR;
 import org.usfirst.frc.team810.robot.subsystems.Arm;
 import org.usfirst.frc.team810.robot.subsystems.Claw;
@@ -124,11 +118,11 @@ public class Robot extends TimedRobot {
 		RobotMap.intakePiston.set(true);
 		
 		start = startPosChooser.getSelected();
-		target = startPosChooser.getSelected();
+		target = targetChooser.getSelected();
 		
 		//Ugly code to decide auto using other methods for cleanliness
 		if (target.equals("Forward"))
-			autonomousCommand = new DriveForward(start.equals("Center") ? 3 : 10);
+			autonomousCommand = new DriveForward(start.equals("Center") ? 120 : 237.735);
 		else if (target.equals("Switch"))
 			targetSwitch();
 		else if (target.equals("Scale"))
@@ -148,7 +142,7 @@ public class Robot extends TimedRobot {
 			if (config == 'L')
 				autonomousCommand = new SwitchLL();
 			else if (config == 'R')
-				autonomousCommand = new SwitchLR();
+				autonomousCommand = new DriveForward(237.735);
 			else
 				System.out.println("Error: Invalid config \'" + config + "\'");
 		}
@@ -162,7 +156,7 @@ public class Robot extends TimedRobot {
 		}
 		else if (start.equals("Right")) {
 			if (config == 'L')
-				autonomousCommand = new SwitchRL();
+				autonomousCommand = new DriveForward(237.735);
 			else if (config == 'R')
 				autonomousCommand = new SwitchRR();
 			else
@@ -177,21 +171,16 @@ public class Robot extends TimedRobot {
 			if (config == 'L')
 				autonomousCommand = new ScaleLL();
 			else if (config == 'R')
-				autonomousCommand = new ScaleLR();
+				autonomousCommand = new DriveForward(237.735);
 			else
 				System.out.println("Error: Invalid config \'" + config + "\'");
 		}
 		else if (start.equals("Center")) {
-			if (config == 'L')
-				autonomousCommand = new ScaleCL();
-			else if (config == 'R')
-				autonomousCommand = new ScaleCR();
-			else
-				System.out.println("Error: Invalid config \'" + config + "\'");
+			autonomousCommand = new DriveForward(120);
 		}
 		else if (start.equals("Right")) {
 			if (config == 'L')
-				autonomousCommand = new ScaleRL();
+				autonomousCommand = new DriveForward(237.735);
 			else if (config == 'R')
 				autonomousCommand = new ScaleRR();
 			else

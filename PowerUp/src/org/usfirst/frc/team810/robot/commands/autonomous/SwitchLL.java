@@ -8,9 +8,14 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class SwitchLL extends CommandGroup {
 	
 	public SwitchLL() {
-		addSequential(new DriveForward(5));
-		addParallel(new AutoMoveArm((Arm.up + Arm.down) / 2));
 		addSequential(new ToggleClaw());
+		addSequential(new DriveForward(144));
+		addSequential(new RotateToAngle(90));
+		addSequential(new AutoMoveArm(Arm.middle));
+		addSequential(new DriveForward(24));
+		addSequential(new ToggleClaw());
+		addSequential(new Wait(.25));
+		addSequential(new DriveForward(-24));
 		addSequential(new AutoMoveArm(Arm.down));
 	}
 
