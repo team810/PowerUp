@@ -33,6 +33,7 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -49,8 +50,8 @@ public class Robot extends TimedRobot {
 	public static Claw claw;
 	public static Climber climber;
 	public static Intake intake;
-	
-	public static UsbCamera intakeCam;
+		
+	public static UsbCamera intakeCam, climberCam;
 
 	Command autonomousCommand;
 	SendableChooser<String> targetChooser = new SendableChooser<>();
@@ -68,10 +69,12 @@ public class Robot extends TimedRobot {
 		targetChooser.addDefault("Go Forward", "Forward");
 		targetChooser.addObject("Switch", "Switch");
 		targetChooser.addObject("Scale", "Scale");
+		SmartDashboard.putData("Auto Target", targetChooser);
 		
 		startPosChooser.addDefault("Left", "Left");
 		startPosChooser.addObject("Center", "Center");
 		startPosChooser.addObject("Right", "Right");
+		SmartDashboard.putData("Auto Start Position", startPosChooser);
 		
 		//Initialize Subsystems
 		driveTrain = new DriveTrain();
@@ -83,6 +86,7 @@ public class Robot extends TimedRobot {
 		oi = new OI();
 		
 		intakeCam = CameraServer.getInstance().startAutomaticCapture("Intake", 0);
+		climberCam = CameraServer.getInstance().startAutomaticCapture("Climber", 1);
 	}
 
 	/**
@@ -116,8 +120,6 @@ public class Robot extends TimedRobot {
 	
 	@Override
 	public void autonomousInit() {
-		//Grab the initial cube before moving
-		RobotMap.claw.set(true);
 		//Extend intake rollers slightly outside of bumpers
 		RobotMap.intakePiston.set(true);
 		

@@ -6,10 +6,7 @@ import org.usfirst.frc.team810.robot.RobotMap;
 import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.PIDController;
-import edu.wpi.first.wpilibj.PIDSource;
-import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class AutoMoveArm extends Command {
 	
@@ -19,6 +16,10 @@ public class AutoMoveArm extends Command {
 	
 	private int counter = 0;
 	
+	private final double kP = .8;
+	private final double kI = 0;
+	private final double kD = 0.2;
+	
 	public AutoMoveArm(double target) {
 		requires(Robot.driveTrain);
 		this.target = target;
@@ -26,16 +27,17 @@ public class AutoMoveArm extends Command {
 
 	@Override
 	protected void initialize() {
-		pid = new PIDController(SmartDashboard.getNumber("kP_Arm", 0), SmartDashboard.getNumber("kI_Arm", 0), SmartDashboard.getNumber("kD_Arm", 0), RobotMap.pot, RobotMap.armMotor);
+		pid = new PIDController(-kP, -kI, -kD, RobotMap.pot, a -> {});
 		pid.setContinuous(false);
-		pid.setOutputRange(-.5, .5);
-		pid.setAbsoluteTolerance(2);
+		pid.setOutputRange(-.8, .8);
+		pid.setAbsoluteTolerance(.5);
 		pid.setSetpoint(target);
-		pid.enable();
+		pid.enable();		
 	}
 
 	@Override
 	protected void execute() {
+		RobotMap.armMotor.set(pid.get());
 		if (pid.onTarget())
 			counter++;
 		else

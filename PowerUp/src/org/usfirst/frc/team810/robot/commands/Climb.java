@@ -16,7 +16,8 @@ public class Climb extends Command {
 
 	@Override
 	protected void execute() {
-		RobotMap.climbMotor.set(speed);
+		RobotMap.climbMotor.setInverted(speed < 0);
+		RobotMap.climbMotor.set(Math.abs(speed));
 	}
 
 	@Override
@@ -32,7 +33,7 @@ public class Climb extends Command {
 	@Override
 	protected boolean isFinished() {
 		// TODO Auto-generated method stub
-		return false;
+		return !(Robot.oi.climb.get() && Robot.oi.climbSafety.get());
 	}
 
 }

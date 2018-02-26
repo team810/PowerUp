@@ -12,8 +12,8 @@ public class Drive extends Command {
 
 	@Override
 	protected void execute() {
-		double left = -Robot.oi.leftStick.getRawAxis(1);
-		double right = -Robot.oi.rightStick.getRawAxis(1);
+		double left = Robot.oi.leftStick.getRawAxis(1);
+		double right = Robot.oi.rightStick.getRawAxis(1);
 		
 		//Add dead zone to joysticks
 		if (Math.abs(left) < .2)
@@ -21,7 +21,13 @@ public class Drive extends Command {
 		if (Math.abs(right) < .2)
 			right = 0;
 		
-		Robot.driveTrain.tankDrive(left, right);
+		//Limit speed going backwards to prevent tipping
+		if (left < -.8)
+			left = -.8;
+		if (right < -.8)
+			right = -.8;
+		
+		Robot.driveTrain.tankDrive(right, left);
 	}
 
 	@Override

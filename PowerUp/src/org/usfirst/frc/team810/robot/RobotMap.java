@@ -15,6 +15,7 @@ import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.AnalogPotentiometer;
 import edu.wpi.first.wpilibj.CounterBase;
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
@@ -38,7 +39,7 @@ public class RobotMap {
 	public static Encoder leftEnc, rightEnc;
 	
 	private static final double wheelDiameter = 6; //in inches
-	private static final double pulsesPerRev = 1440;
+	private static final double pulsesPerRev = 360;
 	
 	public static void init() {
 		//Drive Train
@@ -50,6 +51,7 @@ public class RobotMap {
 		SpeedControllerGroup leftGroup = new SpeedControllerGroup(frontL, rearL);
 		SpeedControllerGroup rightGroup = new SpeedControllerGroup(frontR, rearR);
 		robotDrive = new DifferentialDrive(leftGroup, rightGroup);
+		robotDrive.setSafetyEnabled(false);
 		
 		//CIM Motors
 		intakeL = new Spark(PortNumbers.INTAKE_LEFT);
@@ -64,14 +66,19 @@ public class RobotMap {
 		springPiston = new Solenoid(PortNumbers.SPRING_PISTON);
 		
 		//Sensors
-		navx = new AHRS(edu.wpi.first.wpilibj.I2C.Port.kOnboard);
-		pot = new AnalogPotentiometer(PortNumbers.POT, 25, 0); //25 in string pot
+		navx = new AHRS(I2C.Port.kMXP);
+		AutoPutData.addNumber("Navx angle", navx::getAngle);
+		pot = new AnalogPotentiometer(PortNumbers.POT, 25, 0); //25" string pot
 		Arm.initConstants();
 		
-		leftEnc = new Encoder(PortNumbers.ENCODER_LEFT_A, PortNumbers.ENCODER_LEFT_B, false, CounterBase.EncodingType.k4X);
+		leftEnc = new Encoder(PortNumbers.ENCODER_LEFT_A, PortNumbers.ENCODER_LEFT_B, true, CounterBase.EncodingType.k4X);
 		rightEnc = new Encoder(PortNumbers.ENCODER_RIGHT_A, PortNumbers.ENCODER_RIGHT_B, false, CounterBase.EncodingType.k4X);
 		
 		leftEnc.setDistancePerPulse((Math.PI * wheelDiameter) / pulsesPerRev);
 		rightEnc.setDistancePerPulse((Math.PI * wheelDiameter) / pulsesPerRev);
+		
+		AutoPutData.addNumber("Potentiometer", pot::get);
+		AutoPutData.addNumber("Left Encoder", leftEnc::getDistance);
+		AutoPutData.addNumber("Right Encoder", rightEnc::getDistance);
 	}
 }

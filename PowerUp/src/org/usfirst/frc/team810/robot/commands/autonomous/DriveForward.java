@@ -3,43 +3,46 @@ package org.usfirst.frc.team810.robot.commands.autonomous;
 import org.usfirst.frc.team810.robot.Robot;
 import org.usfirst.frc.team810.robot.RobotMap;
 
-import com.kauailabs.navx.frc.AHRS;
-
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDSource;
 import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class DriveForward extends Command {
 
 	double dist, heading;
 	PIDController pid;
 	
+	private final double kP = .3;
+	private final double kI = .021;
+	private final double kD = .42;
+	
 	private int counter = 0;
 	
-	//takes distance in feet
+	//takes distance in inches
 	public DriveForward(double dist) {
 		requires(Robot.driveTrain);
-		this.dist = dist * 12; //convert feet to inches
+		this.dist = dist;
+	}
+	
+	@Override
+	protected void initialize() {
+		pid = new PIDController(kP, kI, kD, new DistanceSource(), a->{});
+		pid.setContinuous(false);
+		double fullSpeed = (dist > 0) ? .7 : .5;
+		pid.setOutputRange(-fullSpeed, fullSpeed);
+		pid.setAbsoluteTolerance(1);
+		pid.setSetpoint(dist);
+		pid.enable();
+
 		heading = RobotMap.navx.getAngle();
 	}
 
 	@Override
-	protected void initialize() {
-		pid = new PIDController(SmartDashboard.getNumber("kP", 0), SmartDashboard.getNumber("kI", 0), SmartDashboard.getNumber("kD", 0), new DistanceSource(), a->{});
-		pid.setContinuous(false);
-		pid.setOutputRange(-1, 1);
-		pid.setAbsoluteTolerance(2);
-		pid.setSetpoint(dist);
-		pid.enable();
-	}
-
-	@Override
-	protected void execute() {
-		double rot = (heading - RobotMap.navx.getAngle()) * SmartDashboard.getNumber("kP", 0);
-		Robot.driveTrain.arcadeDrive(pid.get(), rot);
+	protected void execute() {		
+		double rot = (heading - RobotMap.navx.getAngle()) * kP;
+		Robot.driveTrain.arcadeDrive(-pid.get(), rot);
 		
 		if (pid.onTarget())
 			counter++;
@@ -61,7 +64,7 @@ public class DriveForward extends Command {
 	@Override
 	protected boolean isFinished() {
 		return counter >= 10;
-	}
+		}
 
 }
 

@@ -26,15 +26,18 @@ public class Intake extends Subsystem {
 	}
 
 	public void set(double speedL, double speedR)  {
+		left.setInverted(speedL < 0);
+		right.setInverted(speedR < 0);
+		
 		if (speedL == 0)
 			left.disable();
 		else
-			left.set(speedL);
+			left.set(Math.abs(speedL));
 		
 		if (speedR == 0)
 			right.disable();
 		else
-			right.set(speedR);
+			right.set(Math.abs(speedR));
 	}
 	
 }

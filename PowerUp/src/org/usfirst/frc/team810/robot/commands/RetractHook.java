@@ -16,18 +16,19 @@ public class RetractHook extends TimedCommand {
 	@Override
 	protected boolean isFinished() {
 		// TODO Auto-generated method stub
-		return super.isFinished();
+		return false;
 	}
 
 	@Override
 	protected void execute() {
+		RobotMap.hookMotor.setInverted(false);
 		if (DriverStation.getInstance().getMatchTime() <= 30)
-			RobotMap.hookMotor.set(-.35);
+			RobotMap.hookMotor.set(.35);
 	}
 
 	@Override
 	protected void end() {
-		RobotMap.hookMotor.disable();
+		RobotMap.hookMotor.set(0);
 	}
 
 	@Override

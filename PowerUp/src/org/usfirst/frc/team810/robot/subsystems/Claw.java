@@ -10,6 +10,7 @@ public class Claw extends Subsystem {
 	Solenoid claw;
 	
 	public Claw() {
+		claw = RobotMap.claw;
 	}
 
 	@Override

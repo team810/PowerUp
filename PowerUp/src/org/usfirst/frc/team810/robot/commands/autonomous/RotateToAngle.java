@@ -6,16 +6,17 @@ import org.usfirst.frc.team810.robot.RobotMap;
 import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.PIDController;
-import edu.wpi.first.wpilibj.PIDSource;
-import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class RotateToAngle extends Command {
 	
 	AHRS navx = RobotMap.navx;
 	double target;
 	PIDController pid;
+	
+	private final double kP = .09;
+	private final double kI = .002;
+	private final double kD = .12;
 	
 	private int counter = 0;
 	
@@ -26,10 +27,12 @@ public class RotateToAngle extends Command {
 
 	@Override
 	protected void initialize() {
-		pid = new PIDController(SmartDashboard.getNumber("kP", 0), SmartDashboard.getNumber("kI", 0), SmartDashboard.getNumber("kD", 0), new AngleSource(), a->{});
+		navx.reset();
+		pid = new PIDController(kP, kI, kD, RobotMap.navx, a->{});
 		pid.setContinuous(true);
-		pid.setOutputRange(-.5, .5);
-		pid.setAbsoluteTolerance(2);
+		pid.setInputRange(-180, 180);
+		pid.setOutputRange(-.67, .67);
+		pid.setAbsoluteTolerance(5);
 		pid.setSetpoint(target);
 		pid.enable();
 	}
@@ -56,33 +59,7 @@ public class RotateToAngle extends Command {
 
 	@Override
 	protected boolean isFinished() {
-		return counter >= 10;
+		return counter >= 5;
 	}
 
-}
-
-class AngleSource implements PIDSource {
-	
-	AngleSource() {
-		RobotMap.navx.reset();
-		RobotMap.navx.zeroYaw();
-	}
-
-	@Override
-	public void setPIDSourceType(PIDSourceType pidSource) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public PIDSourceType getPIDSourceType() {
-		// TODO Auto-generated method stub
-		return PIDSourceType.kDisplacement;
-	}
-
-	@Override
-	public double pidGet() {
-		return RobotMap.navx.getYaw();
-	}
-	
 }
