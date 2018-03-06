@@ -12,12 +12,15 @@ import org.usfirst.frc.team810.robot.commands.ExtendHook;
 import org.usfirst.frc.team810.robot.commands.Intake;
 import org.usfirst.frc.team810.robot.commands.MoveArm;
 import org.usfirst.frc.team810.robot.commands.OneSideIntake;
+import org.usfirst.frc.team810.robot.commands.OnlyClawToggle;
 import org.usfirst.frc.team810.robot.commands.RetractHook;
+import org.usfirst.frc.team810.robot.commands.SetSpringPiston;
 import org.usfirst.frc.team810.robot.commands.ToggleClaw;
 import org.usfirst.frc.team810.robot.commands.autonomous.AutoMoveArm;
 import org.usfirst.frc.team810.robot.commands.autonomous.DriveForward;
 import org.usfirst.frc.team810.robot.commands.autonomous.RotateToAngle;
 import org.usfirst.frc.team810.robot.commands.autonomous.ScaleRR;
+import org.usfirst.frc.team810.robot.commands.autonomous.SwitchCL;
 import org.usfirst.frc.team810.robot.commands.autonomous.SwitchCR;
 import org.usfirst.frc.team810.robot.subsystems.Arm;
 
@@ -31,7 +34,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class OI {
 	public Joystick leftStick, rightStick, gamepad;
-	public JoystickButton intake, oneIntake, output, raiseArm, lowerArm, toggleClaw, extendHook, retractHook, climb, climbSafety;
+	public JoystickButton intake, oneIntake, output, raiseArm, lowerArm, toggleClaw, toggleOnlyClaw, extendHook, retractHook, climb, climbSafety;
 	
 	public OI() {
 		//Joysticks
@@ -50,13 +53,16 @@ public class OI {
 		output.whileHeld(new Intake(-.8));
 		
 		raiseArm = new JoystickButton(gamepad, 4);
-		raiseArm.whileHeld(new MoveArm(-.7));
+		raiseArm.whileHeld(new MoveArm(-.9));
 		
 		lowerArm = new JoystickButton(gamepad, 2);
-		lowerArm.whileHeld(new MoveArm(.7));
+		lowerArm.whileHeld(new MoveArm(.9));
 		
 		toggleClaw = new JoystickButton(gamepad, 3);
 		toggleClaw.whenPressed(new ToggleClaw());
+		
+		toggleOnlyClaw = new JoystickButton(gamepad, 1);
+		toggleOnlyClaw.whenPressed(new OnlyClawToggle());
 		
 		extendHook = new JoystickButton(gamepad, 6);
 		extendHook.whileHeld(new ExtendHook(1));
@@ -67,12 +73,13 @@ public class OI {
 		climb = new JoystickButton(gamepad, 5);
 		climb.whileHeld(new Climb(1));
 		
-		climbSafety = new JoystickButton(gamepad, 7);
+		climbSafety = new JoystickButton(leftStick, 2);
 		
 		//SmartDashboard values
 		SmartDashboard.putData("Move Arm to Middle", new AutoMoveArm(Arm.middle));
 		SmartDashboard.putData("Move Arm to Top", new AutoMoveArm(Arm.up));
 		SmartDashboard.putData("Move Arm to Bottom", new AutoMoveArm(Arm.down));
+		SmartDashboard.putData("Move Arm a little", new AutoMoveArm(Arm.down + .5));
 		
 		SmartDashboard.putData("Drive Forward 1 ft", new DriveForward(12));
 		SmartDashboard.putData("Drive Forward 3 ft", new DriveForward(36));
@@ -87,5 +94,8 @@ public class OI {
 		
 		SmartDashboard.putData("Auto Scale Right Right", new ScaleRR());
 		SmartDashboard.putData("Auto Switch Right", new SwitchCR());
+		SmartDashboard.putData("Auto Switch Left", new SwitchCL());
+		
+		SmartDashboard.putData("Toggle Intake Piston", new SetSpringPiston());
 	}
 }

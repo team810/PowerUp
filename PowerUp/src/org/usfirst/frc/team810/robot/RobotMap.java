@@ -14,6 +14,7 @@ import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.AnalogPotentiometer;
 import edu.wpi.first.wpilibj.CounterBase;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.Solenoid;
@@ -30,7 +31,8 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 public class RobotMap {
 	
 	public static Spark rearL, rearR, intakeL, intakeR, armMotor, hookMotor, climbMotor;
-	public static Solenoid intakePiston, claw, springPiston;
+	public static Solenoid intakePiston;
+	public static DoubleSolenoid springPiston, claw;
 	public static DifferentialDrive robotDrive;
 	public static WPI_TalonSRX frontL, frontR;
 	
@@ -62,8 +64,10 @@ public class RobotMap {
 		
 		//Solenoids
 		intakePiston = new Solenoid(PortNumbers.INTAKE_PISTON);
-		claw = new Solenoid(PortNumbers.CLAW);
-		springPiston = new Solenoid(PortNumbers.SPRING_PISTON);
+		claw = new DoubleSolenoid(PortNumbers.CLAW_A, PortNumbers.CLAW_B);
+		claw.set(DoubleSolenoid.Value.kForward);
+		springPiston = new DoubleSolenoid(PortNumbers.SPRING_PISTON_A, PortNumbers.SPRING_PISTON_B);
+		springPiston.set(DoubleSolenoid.Value.kReverse);
 		
 		//Sensors
 		navx = new AHRS(I2C.Port.kMXP);

@@ -18,8 +18,10 @@ public class PortNumbers {
 	
 	//PCM
 	public static final int INTAKE_PISTON = 0;
-	public static final int CLAW = 1;
-	public static final int SPRING_PISTON = 2;
+	public static final int CLAW_A = 2;
+	public static final int CLAW_B = 3;
+	public static final int SPRING_PISTON_A = 1;
+	public static final int SPRING_PISTON_B = 4;
 	
 	//Analog
 	public static final int POT = 0;

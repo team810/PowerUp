@@ -3,6 +3,7 @@ package org.usfirst.frc.team810.robot.commands.autonomous;
 import org.usfirst.frc.team810.robot.Robot;
 import org.usfirst.frc.team810.robot.RobotMap;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDSource;

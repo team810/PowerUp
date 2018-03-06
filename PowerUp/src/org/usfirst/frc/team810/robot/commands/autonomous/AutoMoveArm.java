@@ -12,7 +12,7 @@ public class AutoMoveArm extends Command {
 	
 	AHRS navx = RobotMap.navx;
 	double target;
-	PIDController pid;
+	//PIDController pid;
 	
 	private int counter = 0;
 	
@@ -27,18 +27,27 @@ public class AutoMoveArm extends Command {
 
 	@Override
 	protected void initialize() {
-		pid = new PIDController(-kP, -kI, -kD, RobotMap.pot, a -> {});
+		/*pid = new PIDController(-kP, -kI, -kD, RobotMap.pot, a -> {});
 		pid.setContinuous(false);
 		pid.setOutputRange(-.8, .8);
 		pid.setAbsoluteTolerance(.5);
 		pid.setSetpoint(target);
-		pid.enable();		
+		pid.enable();*/		
 	}
 
 	@Override
 	protected void execute() {
-		RobotMap.armMotor.set(pid.get());
-		if (pid.onTarget())
+		double current = RobotMap.pot.get();
+		double value = (current - target) * kP;
+		
+		if (value > .8)
+			value = .8;
+		if (value < -.8)
+			value = -.8;
+		
+		RobotMap.armMotor.set(value);
+		
+		if (Math.abs(target - current) <= .5)
 			counter++;
 		else
 			counter = 0;
@@ -46,8 +55,9 @@ public class AutoMoveArm extends Command {
 
 	@Override
 	protected void end() {
-		pid.disable();
-		pid.free();
+		/*pid.disable();
+		pid.free();*/
+		RobotMap.armMotor.set(0);
 	}
 
 	@Override
