@@ -2,20 +2,35 @@ package org.usfirst.frc.team810.robot.commands;
 
 import org.usfirst.frc.team810.robot.Robot;
 import org.usfirst.frc.team810.robot.RobotMap;
-import org.usfirst.frc.team810.robot.subsystems.Arm;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 public class KeepArmStill extends Command {
 	
+	private double target;
+	
+	private double kP = .8;
+	
+	@Override
+	protected void initialize() {
+		target = RobotMap.pot.get();
+	}
+
 	public KeepArmStill() {
 		requires(Robot.arm);
 	}
 
 	@Override
 	protected void execute() {
-		if (RobotMap.pot.get() > Arm.down + .2)
-			RobotMap.armMotor.set(0);
+		double current = RobotMap.pot.get();
+		double value = (target - current) * kP;
+		
+		if (value > .8)
+			value = .8;
+		if (value < -.8)
+			value = -.8;
+		
+		RobotMap.armMotor.set(value);
 	}
 
 	@Override

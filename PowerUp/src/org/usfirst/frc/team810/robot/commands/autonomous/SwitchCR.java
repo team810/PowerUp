@@ -10,9 +10,11 @@ public class SwitchCR extends CommandGroup {
 	public SwitchCR() {
 		addSequential(new ToggleClaw());
 		addSequential(new DriveForward(24));
-		addSequential(new RotateToAngle(27));
+		addSequential(new RotateToAngle(32));
 		addSequential(new AutoMoveArm(Arm.middle));
-		addSequential(new DriveForward(77));
+		addSequential(new DriveForward(74));
+		addSequential(new RotateToAngle(-13));
+		addSequential(new Wait(.25));
 		addSequential(new ToggleClaw());
 		addSequential(new Wait(.25));
 		addSequential(new DriveForward(-70));

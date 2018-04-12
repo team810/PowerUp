@@ -5,7 +5,6 @@ import org.usfirst.frc.team810.robot.RobotMap;
 
 import com.kauailabs.navx.frc.AHRS;
 
-import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class AutoMoveArm extends Command {
@@ -17,8 +16,6 @@ public class AutoMoveArm extends Command {
 	private int counter = 0;
 	
 	private final double kP = .8;
-	private final double kI = 0;
-	private final double kD = 0.2;
 	
 	public AutoMoveArm(double target) {
 		requires(Robot.driveTrain);

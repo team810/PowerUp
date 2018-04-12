@@ -16,8 +16,10 @@ public class Climb extends Command {
 
 	@Override
 	protected void execute() {
-		RobotMap.climbMotor.setInverted(speed < 0);
-		RobotMap.climbMotor.set(Math.abs(speed));
+		if (Robot.oi.climbSafety.get()) {
+			RobotMap.climbMotor.setInverted(speed < 0);
+			RobotMap.climbMotor.set(Math.abs(speed));
+		}
 	}
 
 	@Override

@@ -171,21 +171,35 @@ public class Robot extends TimedRobot {
 	
 	private void targetScale() {
 		char config = DriverStation.getInstance().getGameSpecificMessage().charAt(1);
+		char switchState = DriverStation.getInstance().getGameSpecificMessage().charAt(0);
 		
 		if (start.equals("Left")) {
 			if (config == 'L')
 				autonomousCommand = new ScaleLL();
-			else if (config == 'R')
-				autonomousCommand = new JustForward(237.735);
+			else if (config == 'R') {
+				if (switchState == 'L')
+					autonomousCommand = new SwitchLL();
+				else
+					autonomousCommand = new JustForward(237.735);
+			}
 			else
 				System.out.println("Error: Invalid config \'" + config + "\'");
 		}
 		else if (start.equals("Center")) {
-			autonomousCommand = new JustForward(120);
+			if (switchState == 'L')
+				autonomousCommand = new SwitchCL();
+			else if (switchState == 'R')
+				autonomousCommand = new SwitchCR();
+			else
+				autonomousCommand = new CenterForward();
 		}
 		else if (start.equals("Right")) {
-			if (config == 'L')
-				autonomousCommand = new JustForward(237.735);
+			if (config == 'L') {
+				if (switchState == 'R')
+					autonomousCommand = new SwitchRR();
+				else
+					autonomousCommand = new JustForward(237.735);
+			}
 			else if (config == 'R')
 				autonomousCommand = new ScaleRR();
 			else

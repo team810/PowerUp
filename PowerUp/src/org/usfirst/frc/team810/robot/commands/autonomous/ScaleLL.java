@@ -11,8 +11,8 @@ public class ScaleLL extends CommandGroup {
 		addSequential(new ToggleClaw());
 		addSequential(new DriveForward(237.735));
 		addSequential(new RotateToAngle(30));
-		addSequential(new AutoMoveArm((Arm.up + Arm.middle) / 2));
-		addSequential(new DriveForward(32));
+		addSequential(new AutoMoveArm(((Arm.up + Arm.middle) / 2) - .3));
+		addSequential(new DriveForward(40));
 		addSequential(new ToggleClaw());
 		addSequential(new Wait(.25));
 		addSequential(new DriveForward(-32));

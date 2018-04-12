@@ -6,6 +6,8 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class Drive extends Command {
 	
+	private double lastL = 0, lastR = 0;
+	
 	public Drive() {
 		requires(Robot.driveTrain);
 	}
@@ -26,6 +28,21 @@ public class Drive extends Command {
 			left = -.8;
 		if (right < -.8)
 			right = -.8;
+		
+		//Limit acceleration via joystick values
+		double maxChange = .02;
+		if ((Math.signum(left) == Math.signum(right) && Math.signum(lastL) == Math.signum(lastR))) {
+			if (left > lastL + maxChange)
+				left = lastL + maxChange;
+			if (left < lastL - maxChange)
+				left = lastL - maxChange;
+			if (right > lastR + maxChange)
+				right = lastR + maxChange;
+			if (right < lastR - maxChange)
+				right = lastR - maxChange;
+		}
+		lastL = left;
+		lastR = right;
 		
 		Robot.driveTrain.tankDrive(right, left);
 	}

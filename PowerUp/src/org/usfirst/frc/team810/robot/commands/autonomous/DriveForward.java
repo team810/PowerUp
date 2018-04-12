@@ -3,7 +3,6 @@ package org.usfirst.frc.team810.robot.commands.autonomous;
 import org.usfirst.frc.team810.robot.Robot;
 import org.usfirst.frc.team810.robot.RobotMap;
 
-import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDSource;
@@ -16,8 +15,8 @@ public class DriveForward extends Command {
 	PIDController pid;
 	
 	private final double kP = .3;
-	private final double kI = .021;
-	private final double kD = .42;
+	private final double kI = .023;
+	private final double kD = 1.5;
 	
 	private int counter = 0;
 	

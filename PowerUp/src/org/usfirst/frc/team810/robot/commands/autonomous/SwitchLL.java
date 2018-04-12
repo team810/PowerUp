@@ -10,9 +10,9 @@ public class SwitchLL extends CommandGroup {
 	public SwitchLL() {
 		addSequential(new ToggleClaw());
 		addSequential(new DriveForward(144));
-		addSequential(new RotateToAngle(90));
 		addSequential(new AutoMoveArm(Arm.middle));
-		addSequential(new DriveForward(24));
+		addSequential(new RotateToAngle(90));
+		addSequential(new Wait(.25));
 		addSequential(new ToggleClaw());
 		addSequential(new Wait(.25));
 		addSequential(new DriveForward(-24));
