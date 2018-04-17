@@ -12,12 +12,13 @@ public class SwitchCR extends CommandGroup {
 		addSequential(new DriveForward(24));
 		addSequential(new RotateToAngle(32));
 		addSequential(new AutoMoveArm(Arm.middle));
-		addSequential(new DriveForward(74));
+		addSequential(new DriveForward(80));
 		addSequential(new RotateToAngle(-13));
+		addSequential(new DriveForward(2));
 		addSequential(new Wait(.25));
 		addSequential(new ToggleClaw());
 		addSequential(new Wait(.25));
-		addSequential(new DriveForward(-70));
+		addSequential(new DriveForward(-35));
 		addSequential(new AutoMoveArm(Arm.down));
 	}
 

@@ -24,10 +24,10 @@ public class Drive extends Command {
 			right = 0;
 		
 		//Limit speed going backwards to prevent tipping
-		if (left < -.8)
-			left = -.8;
-		if (right < -.8)
-			right = -.8;
+		if (left > .8)
+			left = .8;
+		if (right > .8)
+			right = .8;
 		
 		//Limit acceleration via joystick values
 		double maxChange = .02;

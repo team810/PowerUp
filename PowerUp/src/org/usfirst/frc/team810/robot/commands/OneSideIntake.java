@@ -15,7 +15,7 @@ public class OneSideIntake extends Command {
 
 	@Override
 	protected void execute() {
-		Robot.intake.set(speed, 0);
+		Robot.intake.set(0, speed);
 	}
 
 	@Override

@@ -33,7 +33,8 @@ public class DriveForward extends Command {
 		double fullSpeed = (dist > 0) ? .7 : .5;
 		pid.setOutputRange(-fullSpeed, fullSpeed);
 		pid.setAbsoluteTolerance(1);
-		pid.setSetpoint(dist);
+		double change = (Math.abs(dist) < 50) ? 1 : 2;
+		pid.setSetpoint(dist + ((dist > 0) ? -change : change));
 		pid.enable();
 
 		heading = RobotMap.navx.getAngle();
@@ -54,6 +55,7 @@ public class DriveForward extends Command {
 	protected void end() {
 		pid.disable();
 		pid.free();
+		Robot.driveTrain.arcadeDrive(0, 0);
 	}
 
 	@Override
@@ -92,7 +94,8 @@ class DistanceSource implements PIDSource {
 
 	@Override
 	public double pidGet() {
-		return (leftEnc.getDistance() + rightEnc.getDistance()) / 2;
+		//return (leftEnc.getDistance() + rightEnc.getDistance()) / 2;
+		return rightEnc.getDistance();
 	}
 	
 }

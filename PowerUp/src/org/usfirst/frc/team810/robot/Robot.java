@@ -7,6 +7,7 @@
 
 package org.usfirst.frc.team810.robot;
 
+import org.usfirst.frc.team810.robot.commands.autonomous.AutoMoveArm;
 import org.usfirst.frc.team810.robot.commands.autonomous.CenterForward;
 import org.usfirst.frc.team810.robot.commands.autonomous.JustForward;
 import org.usfirst.frc.team810.robot.commands.autonomous.ScaleLL;
@@ -61,7 +62,8 @@ public class Robot extends TimedRobot {
 		RobotMap.init();
 		
 		//Acquire strings to help decide which auto to use
-		targetChooser.addDefault("Go Forward", "Forward");
+		targetChooser.addDefault("Do Nothing", "Nothing");
+		targetChooser.addObject("Go Forward", "Forward");
 		targetChooser.addObject("Switch", "Switch");
 		targetChooser.addObject("Scale", "Scale");
 		SmartDashboard.putData("Auto Target", targetChooser);
@@ -115,18 +117,16 @@ public class Robot extends TimedRobot {
 	
 	@Override
 	public void autonomousInit() {
-		//Extend intake rollers slightly outside of bumpers
-		RobotMap.intakePiston.set(true);
-		
 		start = startPosChooser.getSelected();
 		target = targetChooser.getSelected();
 		
 		//Ugly code to decide auto using other methods for cleanliness
-		if (target.equals("Forward")) {
+		if (target.equals("Nothing")) {}
+		else if (target.equals("Forward")) {
 			if (target.equals("Center"))
 				autonomousCommand = new CenterForward();
 			else
-				autonomousCommand = new JustForward(180);
+				autonomousCommand = new JustForward(132);
 		}
 		else if (target.equals("Switch"))
 			targetSwitch();
@@ -147,7 +147,7 @@ public class Robot extends TimedRobot {
 			if (config == 'L')
 				autonomousCommand = new SwitchLL();
 			else if (config == 'R')
-				autonomousCommand = new JustForward(237.735);
+				autonomousCommand = new JustForward(180);
 			else
 				System.out.println("Error: Invalid config \'" + config + "\'");
 		}
@@ -161,7 +161,7 @@ public class Robot extends TimedRobot {
 		}
 		else if (start.equals("Right")) {
 			if (config == 'L')
-				autonomousCommand = new JustForward(237.735);
+				autonomousCommand = new JustForward(180);
 			else if (config == 'R')
 				autonomousCommand = new SwitchRR();
 			else
@@ -224,6 +224,9 @@ public class Robot extends TimedRobot {
 		if (autonomousCommand != null) {
 			autonomousCommand.cancel();
 		}
+		
+		//Extend intake rollers slightly outside of bumpers
+		RobotMap.intakePiston.set(true);
 	}
 
 	/**

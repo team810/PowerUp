@@ -4,6 +4,7 @@ import org.usfirst.frc.team810.robot.Robot;
 import org.usfirst.frc.team810.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.AnalogPotentiometer;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class MoveArm extends Command {
@@ -24,6 +25,7 @@ public class MoveArm extends Command {
 	@Override
 	protected void execute() {
 		Robot.arm.set(speed);
+		DriverStation.reportWarning("Pot value: " + pot.get(), false);
 	}
 
 	@Override

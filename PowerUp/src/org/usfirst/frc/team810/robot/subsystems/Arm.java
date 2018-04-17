@@ -31,7 +31,7 @@ public class Arm extends Subsystem {
 		if ((speed > 0 && pot.get() <= Arm.down) || (speed < 0 && pot.get() >= Arm.up))
 			speed = 0;
 		else if ((speed > 0 && pot.get() <= Arm.down_area) || (speed < 0 && pot.get() >= Arm.up_area))
-			speed *= .5;
+			speed *= .45;
 		
 		SmartDashboard.putNumber("Move Arm Final Speed", speed);
 		
@@ -40,10 +40,10 @@ public class Arm extends Subsystem {
 	
 	public static void initConstants() {
 		down = RobotMap.pot.get();
-		down_area = down + 1.5;
+		down_area = down + 2;
 		middle = down + 4;
-		up = down + 10.2;
-		up_area = up - 1.5;
+		up = down + 9.79;//was 9.79
+		up_area = up - 3;
 		
 		SmartDashboard.putNumber("Arm Up", up);
 		SmartDashboard.putNumber("Arm Up Range", up_area);

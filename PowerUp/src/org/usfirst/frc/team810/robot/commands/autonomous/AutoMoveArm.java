@@ -18,7 +18,7 @@ public class AutoMoveArm extends Command {
 	private final double kP = .8;
 	
 	public AutoMoveArm(double target) {
-		requires(Robot.driveTrain);
+		requires(Robot.arm);
 		this.target = target;
 	}
 
@@ -43,6 +43,7 @@ public class AutoMoveArm extends Command {
 			value = -.8;
 		
 		RobotMap.armMotor.set(value);
+		//DriverStation.reportWarning("PID Get: " + value, false);
 		
 		if (Math.abs(target - current) <= .5)
 			counter++;

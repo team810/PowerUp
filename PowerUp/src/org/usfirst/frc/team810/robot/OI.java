@@ -22,6 +22,7 @@ import org.usfirst.frc.team810.robot.commands.autonomous.RotateToAngle;
 import org.usfirst.frc.team810.robot.commands.autonomous.ScaleRR;
 import org.usfirst.frc.team810.robot.commands.autonomous.SwitchCL;
 import org.usfirst.frc.team810.robot.commands.autonomous.SwitchCR;
+import org.usfirst.frc.team810.robot.commands.autonomous.SwitchLL;
 import org.usfirst.frc.team810.robot.subsystems.Arm;
 
 import edu.wpi.first.wpilibj.Joystick;
@@ -56,7 +57,7 @@ public class OI {
 		raiseArm.whileHeld(new MoveArm(-.9));
 		
 		lowerArm = new JoystickButton(gamepad, 2);
-		lowerArm.whileHeld(new MoveArm(.9));
+		lowerArm.whileHeld(new MoveArm(1));
 		
 		toggleClaw = new JoystickButton(gamepad, 3);
 		toggleClaw.whenPressed(new ToggleClaw());
@@ -95,6 +96,7 @@ public class OI {
 		SmartDashboard.putData("Auto Scale Right Right", new ScaleRR());
 		SmartDashboard.putData("Auto Switch Right", new SwitchCR());
 		SmartDashboard.putData("Auto Switch Left", new SwitchCL());
+		SmartDashboard.putData("Auto Switch Left Left", new SwitchLL());
 		
 		SmartDashboard.putData("Toggle Intake Piston", new SetSpringPiston());
 	}

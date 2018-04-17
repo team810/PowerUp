@@ -50,6 +50,7 @@ public class RotateToAngle extends Command {
 	protected void end() {
 		pid.disable();
 		pid.free();
+		Robot.driveTrain.arcadeDrive(0, 0);
 	}
 
 	@Override

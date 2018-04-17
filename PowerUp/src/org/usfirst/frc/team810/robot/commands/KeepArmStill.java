@@ -23,7 +23,7 @@ public class KeepArmStill extends Command {
 	@Override
 	protected void execute() {
 		double current = RobotMap.pot.get();
-		double value = (target - current) * kP;
+		double value = (current - target) * kP;
 		
 		if (value > .8)
 			value = .8;
